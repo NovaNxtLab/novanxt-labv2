@@ -37,7 +37,7 @@ function DemoButton({ className }: { className?: string }) {
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "rounded-cut bg-spark-300 px-5 py-2.5 text-center font-display text-sm font-semibold text-ink-900 shadow-glow-spark transition hover:-translate-y-0.5 hover:bg-spark-400",
+        "bg-spark-300 px-5 py-2.5 text-center font-display text-sm font-semibold text-ink-900 shadow-glow-spark transition hover:-translate-y-0.5 hover:bg-spark-400",
         className,
       )}
     >
@@ -115,7 +115,7 @@ function DesktopNav() {
         animate={scrolled ? COMPACT : EXPANDED}
         transition={{ type: "spring", stiffness: 200, damping: 30 }}
         className={cn(
-          "flex w-full items-center justify-between gap-6 rounded-full border py-2 transition-[background-color,box-shadow,border-color] duration-300",
+          "flex w-full items-center justify-between gap-6 border py-2 transition-[background-color,box-shadow,border-color] duration-300",
           scrolled ? "border-mist-200 bg-mist-50/85 shadow-lift backdrop-blur-md" : "border-transparent bg-transparent",
         )}
       >
@@ -145,9 +145,9 @@ function DesktopNav() {
                 </div>
               ))}
             </div>
-            <a href="/courses" className="mt-4 block border-t border-mist-100 px-2 pt-3 text-sm font-semibold text-brand-600 hover:text-brand-800">
+            <Link href="/courses" className="mt-4 block border-t border-mist-100 px-2 pt-3 text-sm font-semibold text-brand-600 hover:text-brand-800">
               View all {courses.length} courses →
-            </a>
+            </Link>
           </MenuItem>
 
           <MenuItem setActive={setActive} active={active} item="Programs">
@@ -157,7 +157,7 @@ function DesktopNav() {
                 href={courseHref("ai-ml-course-in-kandivali")}
                 description="12-week flagship. Build real AI systems, agents & robotics."
                 visual={
-                  <span className="grid size-16 place-items-center rounded-xl bg-ink-gradient text-brand-700">
+                  <span className="grid size-16 place-items-center bg-ink-gradient text-brand-700">
                     <IconBrain className="size-8" />
                   </span>
                 }
@@ -167,7 +167,7 @@ function DesktopNav() {
                 href={courseHref("kids-computer-course-in-kandivali")}
                 description="Ages 5–10. Six levels from Digital Hero to Creator Studio."
                 visual={
-                  <span className="grid size-16 place-items-center rounded-xl bg-brand-gradient text-spark-800">
+                  <span className="grid size-16 place-items-center bg-brand-gradient text-spark-800">
                     <IconMoodKid className="size-8" />
                   </span>
                 }
@@ -183,7 +183,7 @@ function DesktopNav() {
               key={l.name}
               href={l.href}
               onMouseEnter={() => setActive(null)}
-              className="rounded-full px-3 py-2 text-sm font-medium text-mist-700 transition-colors hover:text-ink-800"
+              className="px-3 py-2 text-sm font-medium text-mist-700 transition-colors hover:text-ink-800"
             >
               {l.name}
             </a>
@@ -242,7 +242,7 @@ function MobileNavbar() {
                   key={n}
                   href={`#${n.toLowerCase()}`}
                   onClick={close}
-                  className="flex min-h-11 flex-1 items-center justify-center rounded-full border border-mist-200 bg-white text-sm font-semibold text-ink-800"
+                  className="flex min-h-11 flex-1 items-center justify-center border border-mist-200 bg-white text-sm font-semibold text-ink-800"
                 >
                   {n}
                 </a>
@@ -275,7 +275,7 @@ function MobileNavbar() {
             <a
               href={contact.phoneHref}
               aria-label={`Call ${contact.phone}`}
-              className="grid size-12 place-items-center rounded-cut border border-mist-200 text-brand-600"
+              className="grid size-12 place-items-center border border-mist-200 text-brand-600"
             >
               <IconPhone className="size-5" />
             </a>

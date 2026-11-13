@@ -31,7 +31,6 @@ export const metadata: Metadata = {
   title: { default: seo.title, template: `%s | ${brand.name}` },
   description: seo.description,
   keywords: [...seo.primaryKeywords, ...seo.courseKeywords],
-  icons: { icon: brand.logos.favicon, apple: brand.logos.favicon },
   openGraph: {
     title: `${brand.name} — ${brand.tagline}`,
     description: seo.description,

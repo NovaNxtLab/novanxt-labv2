@@ -147,7 +147,7 @@ const CollisionMechanism = ({
           repeatDelay: beamOptions.repeatDelay || 0,
         }}
         className={cn(
-          "absolute left-0 top-20 m-auto h-14 w-px rounded-full bg-gradient-to-t from-aqua-300 via-spark-300 to-transparent",
+          "absolute left-0 top-20 m-auto h-14 w-px bg-gradient-to-t from-aqua-300 via-spark-300 to-transparent",
           beamOptions.className,
         )}
       />
@@ -180,7 +180,7 @@ const Explosion = ({ ...props }: React.HTMLProps<HTMLDivElement>) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
-        className="absolute -inset-x-10 top-0 m-auto h-2 w-10 rounded-full bg-gradient-to-r from-transparent via-spark-300 to-transparent blur-sm"
+        className="absolute -inset-x-10 top-0 m-auto h-2 w-10 bg-gradient-to-r from-transparent via-spark-300 to-transparent blur-sm"
       />
       {spans.map((span) => (
         <motion.span
@@ -188,7 +188,7 @@ const Explosion = ({ ...props }: React.HTMLProps<HTMLDivElement>) => {
           initial={{ x: 0, y: 0, opacity: 1 }}
           animate={{ x: span.directionX, y: span.directionY, opacity: 0 }}
           transition={{ duration: span.duration, ease: "easeOut" }}
-          className="absolute h-1 w-1 rounded-full bg-gradient-to-b from-spark-300 to-aqua-300"
+          className="absolute h-1 w-1 bg-gradient-to-b from-spark-300 to-aqua-300"
         />
       ))}
     </div>

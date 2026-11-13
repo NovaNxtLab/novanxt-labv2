@@ -42,7 +42,7 @@ export const CardStack = ({
         <motion.div
           key={card.id}
           className={cn(
-            "absolute inset-x-0 h-full rounded-3xl border border-neutral-200 bg-white p-4 shadow-xl shadow-black/[0.1]",
+            "absolute inset-x-0 h-full border border-neutral-200 bg-white p-4 shadow-xl shadow-black/[0.1]",
             cardClassName,
           )}
           style={{ transformOrigin: "top center" }}

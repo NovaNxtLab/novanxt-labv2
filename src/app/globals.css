@@ -4,6 +4,14 @@
    never from the OS colour-scheme preference. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Desktop-width but short viewports (laptop browsers lose ~100–140px to tabs/address bar/taskbar).
+   Used to keep the homepage course grid inside one screen.
+   short:   ≤ 880px tall  (e.g. 13" MacBook ≈ 1440x790, 1366x768 in fullscreen)
+   shorter: ≤ 760px tall  (e.g. 1366x768 laptop ≈ 1366x625, 1536x864 ≈ 1536x730 browser viewport)
+   Order matters: `shorter` is registered after `short` so its utilities win. */
+@custom-variant short (@media (min-width: 64rem) and (max-height: 880px));
+@custom-variant shorter (@media (min-width: 64rem) and (max-height: 760px));
+
 /* ============================================================
    NovaNxt Lab — Design Tokens  (documented at /design-system)
    Palette "Logo Light" (v4) — the logo's three hues, used as soft tints:
@@ -80,10 +88,11 @@
   --color-whatsapp: #25d366;
 
   /* Radii */
-  --radius-chip: 999px;
-  --radius-btn: 1rem;
-  --radius-card: 1.25rem;
-  --radius-panel: 2rem;
+  /* Square corners site-wide (user decision 2026-11-13): never use rounded-* utilities. */
+  --radius-chip: 0;
+  --radius-btn: 0;
+  --radius-card: 0;
+  --radius-panel: 0;
 
   /* Shadows */
   --shadow-soft: 0 1px 2px rgb(18 23 53 / 0.05), 0 8px 24px -8px rgb(18 23 53 / 0.1);
@@ -181,11 +190,7 @@ body {
   color: var(--color-ink-900);
 }
 
-/* Button shape: top-left + bottom-right sharp, the other two corners rounded.
-   Used for every button / button-like link. Chips & badges stay pills. */
-@utility rounded-cut {
-  border-radius: 0 var(--radius-btn) 0 var(--radius-btn);
-}
+/* Corners: everything is square — buttons, cards, chips, badges, panels. Do not add rounded-* classes. */
 
 /* Signature gradients */
 @utility bg-ink-gradient {

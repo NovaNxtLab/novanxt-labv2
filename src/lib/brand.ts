@@ -51,7 +51,7 @@ export type Course = {
   category: CourseCategory;
   tagline: string;
   summary: string;
-  duration: string | null;
+  duration: string | null; // only AI+ML (12 weeks) was published; others are placeholders to confirm
   modules: string[];
   accent: "brand" | "spark" | "ink";
 };
@@ -84,7 +84,7 @@ export const courses: Course[] = [
     category: "Programming",
     tagline: "Logic | Automation | APIs | Real Applications",
     summary: "Learn Python programming, automation, APIs, and real-world problem solving with AI-powered coding techniques.",
-    duration: null,
+    duration: "2 months", // TODO: placeholder — confirm with institute
     modules: ["Python Basics", "Loops & Functions", "Data Structures", "OOP Concepts", "APIs", "Automation", "GUI (Tkinter)", "AI Integration"],
     accent: "spark",
   },
@@ -95,7 +95,7 @@ export const courses: Course[] = [
     category: "Programming",
     tagline: "From first tag to deployed full-stack app.",
     summary: "Create modern websites using HTML, CSS, JavaScript, and backend with real projects and AI tools.",
-    duration: null,
+    duration: "4 months", // TODO: placeholder — confirm with institute
     modules: ["HTML & CSS", "JavaScript", "Backend", "Real Projects", "AI Tools"],
     accent: "ink",
   },
@@ -106,7 +106,7 @@ export const courses: Course[] = [
     category: "Programming",
     tagline: "Strong logic. Solid OOP. Real applications.",
     summary: "Build strong programming logic with OOP concepts, real-world applications, and AI tools for coding assistance.",
-    duration: null,
+    duration: "2 months", // TODO: placeholder — confirm with institute
     modules: ["Java Fundamentals", "OOP Concepts", "Real-world Applications", "AI Coding Assistants"],
     accent: "ink",
   },
@@ -117,7 +117,7 @@ export const courses: Course[] = [
     category: "Office & Accounts",
     tagline: "Learn Excel Smarter. Analyse Better. Work Faster with AI.",
     summary: "Master data analysis, formulas, dashboards, MIS reporting, and AI tools used in real corporate environments.",
-    duration: null,
+    duration: "6 weeks", // TODO: placeholder — confirm with institute
     modules: ["Formulas & Functions", "XLOOKUP, INDEX & MATCH", "Pivot Tables", "Charts & Dashboards", "MIS Reporting", "Macros"],
     accent: "brand",
   },
@@ -128,7 +128,7 @@ export const courses: Course[] = [
     category: "Office & Accounts",
     tagline: "Master Accounting. Understand Taxation. Build Job-Ready Skills.",
     summary: "Learn accounting, GST, billing, and business management with practical Tally skills and AI support.",
-    duration: null,
+    duration: "2 months", // TODO: placeholder — confirm with institute
     modules: ["Tally Prime", "GST Filing", "Input Tax Credit", "E-Way Bill & E-Invoicing", "TDS & TRACES", "Payroll"],
     accent: "brand",
   },
@@ -139,7 +139,7 @@ export const courses: Course[] = [
     category: "Office & Accounts",
     tagline: "Job-ready for every office role.",
     summary: "Complete MS Office training with real-world tasks, internet skills, and AI tools to become job-ready for office roles.",
-    duration: null,
+    duration: "2 months", // TODO: placeholder — confirm with institute
     modules: ["MS Word", "MS Excel", "MS PowerPoint", "Internet & Email", "AI Productivity Tools"],
     accent: "brand",
   },
@@ -150,7 +150,7 @@ export const courses: Course[] = [
     category: "Creative",
     tagline: "Design. Edit. Go viral.",
     summary: "Master graphic design, cinematic video editing, motion graphics, branding, reels and AI-powered creative tools.",
-    duration: null,
+    duration: "3 months", // TODO: placeholder — confirm with institute
     modules: ["Graphic Design", "Branding", "Video Editing", "Motion Graphics", "Reels Creation", "AI Creative Tools"],
     accent: "ink",
   },
@@ -161,7 +161,7 @@ export const courses: Course[] = [
     category: "Kids",
     tagline: "A Creative Coding + AI Adventure Program (Age 5–10)",
     summary: "Fun-based learning: computer basics, typing, drawing tools and beginner coding, designed for school students.",
-    duration: null,
+    duration: "6 levels", // TODO: placeholder — confirm with institute
     modules: [
       "L1 · Digital Hero Training",
       "L2 · Creative Design Universe",

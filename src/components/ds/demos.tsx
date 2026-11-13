@@ -27,8 +27,8 @@ export function MagneticButton({ children, variant = "brand" }: { children: Reac
       whileTap={{ scale: 0.95 }}
       className={
         variant === "brand"
-          ? "rounded-cut bg-brand-500 px-7 py-3.5 font-display font-semibold text-white shadow-glow-brand transition-colors hover:bg-brand-600"
-          : "rounded-cut border border-current px-7 py-3.5 font-display font-semibold"
+          ? "bg-brand-500 px-7 py-3.5 font-display font-semibold text-white shadow-glow-brand transition-colors hover:bg-brand-600"
+          : "border border-current px-7 py-3.5 font-display font-semibold"
       }
     >
       {children}
@@ -59,14 +59,14 @@ export function TiltCard({ title, tag, body, accent }: { title: string; tag: str
         mx.set(0.5);
         my.set(0.5);
       }}
-      className="group relative overflow-hidden rounded-card border border-line bg-surface p-6 shadow-soft"
+      className="group relative overflow-hidden border border-line bg-surface p-6 shadow-soft"
     >
       <motion.div
         aria-hidden
         className="pointer-events-none absolute -inset-px opacity-0 transition-opacity group-hover:opacity-100"
         style={{ background: glow }}
       />
-      <div className={`mb-5 h-1.5 w-12 rounded-full ${bar}`} />
+      <div className={`mb-5 h-1.5 w-12 ${bar}`} />
       <p className="font-mono text-[11px] uppercase tracking-widest text-muted">{tag}</p>
       <h4 className="mt-2 font-display text-xl font-bold">{title}</h4>
       <p className="mt-3 text-sm text-muted">{body}</p>
@@ -89,10 +89,10 @@ export function CourseFilterDemo() {
             key={c}
             type="button"
             onClick={() => setActive(c)}
-            className="relative rounded-chip px-4 py-2 text-sm font-medium"
+            className="relative px-4 py-2 text-sm font-medium"
           >
             {active === c && (
-              <motion.span layoutId="pill" className="absolute inset-0 rounded-chip bg-ink-800" transition={{ type: "spring", bounce: 0.25 }} />
+              <motion.span layoutId="pill" className="absolute inset-0 bg-ink-800" transition={{ type: "spring", bounce: 0.25 }} />
             )}
             <span className={`relative ${active === c ? "text-white" : "text-muted"}`}>{c}</span>
           </button>
@@ -108,7 +108,7 @@ export function CourseFilterDemo() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
-              className="rounded-card border border-line bg-surface p-4"
+              className="border border-line bg-surface p-4"
             >
               <p className="font-mono text-[11px] uppercase tracking-widest text-muted">{c.category}</p>
               <p className="mt-1 font-display font-semibold">{c.title}</p>
@@ -124,7 +124,7 @@ export function CourseFilterDemo() {
 export function AccordionDemo({ items }: { items: { q: string; a: string }[] }) {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <div className="divide-y divide-line rounded-card border border-line bg-surface">
+    <div className="divide-y divide-line border border-line bg-surface">
       {items.map((it, i) => (
         <div key={it.q}>
           <button
@@ -183,7 +183,7 @@ export function CounterDemo({ stats }: { stats: { value: number; suffix: string;
     return () => ctx.revert();
   }, []);
   return (
-    <div ref={ref} className="grid grid-cols-2 gap-px overflow-hidden rounded-card bg-line md:grid-cols-4">
+    <div ref={ref} className="grid grid-cols-2 gap-px overflow-hidden bg-line md:grid-cols-4">
       {stats.map((s) => (
         <div key={s.label} className="bg-ink-950 p-6">
           <p className="font-display text-4xl font-extrabold text-white md:text-5xl">
@@ -203,7 +203,7 @@ export function MarqueeDemo({ items }: { items: string[] }) {
     <div className="group relative overflow-hidden py-2 [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
       <div className="flex w-max animate-marquee gap-3 group-hover:[animation-play-state:paused]">
         {[...items, ...items].map((t, i) => (
-          <span key={i} className="rounded-chip border border-line bg-surface px-5 py-2 font-mono text-sm whitespace-nowrap">
+          <span key={i} className="border border-line bg-surface px-5 py-2 font-mono text-sm whitespace-nowrap">
             {t}
           </span>
         ))}
@@ -258,7 +258,7 @@ export function JourneyDemo() {
       <ol className="relative grid gap-8 md:grid-cols-3">
         {steps.map((s, i) => (
           <li key={s.t} data-step className="flex flex-col items-center text-center">
-            <span className={`grid size-16 place-items-center rounded-full font-display text-xl font-extrabold text-white ring-8 ring-ink-950 ${s.c}`}>
+            <span className={`grid size-16 place-items-center font-display text-xl font-extrabold text-white ring-8 ring-ink-950 ${s.c}`}>
               0{i + 1}
             </span>
             <p className="mt-4 font-display text-2xl font-bold text-white">{s.t}</p>
@@ -304,11 +304,11 @@ export function TerminalDemo() {
     return () => ctx.revert();
   }, []);
   return (
-    <div className="overflow-hidden rounded-card border border-white/10 bg-ink-950 shadow-lift">
+    <div className="overflow-hidden border border-white/10 bg-ink-950 shadow-lift">
       <div className="flex gap-1.5 border-b border-white/10 px-4 py-3">
-        <span className="size-3 rounded-full bg-danger" />
-        <span className="size-3 rounded-full bg-warning" />
-        <span className="size-3 rounded-full bg-success" />
+        <span className="size-3 bg-danger" />
+        <span className="size-3 bg-warning" />
+        <span className="size-3 bg-success" />
       </div>
       <pre ref={ref} className="min-h-52 p-5 font-mono text-sm leading-7 text-mist-200">
         {lines.map((l, i) => (

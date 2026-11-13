@@ -48,21 +48,21 @@ export function DsHero() {
   return (
     <header ref={root} className="theme-midnight relative overflow-hidden">
       <div className="bg-grid absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
-      <div className="absolute -top-40 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-ink-500/40 blur-[120px]" />
-      <div className="absolute -bottom-40 right-0 h-[360px] w-[520px] rounded-full bg-brand-500/20 blur-[120px]" />
+      <div className="absolute -top-40 left-1/2 h-[520px] w-[820px] -translate-x-1/2 bg-ink-500/40 blur-[120px]" />
+      <div className="absolute -bottom-40 right-0 h-[360px] w-[520px] bg-brand-500/20 blur-[120px]" />
 
       {chips.map((c) => (
         <span
           key={c.label}
           data-chip
-          className={`absolute hidden rounded-chip border bg-white/5 px-4 py-1.5 font-mono text-xs backdrop-blur md:block ${c.cls} ${toneCls[c.tone]}`}
+          className={`absolute hidden border bg-white/5 px-4 py-1.5 font-mono text-xs backdrop-blur md:block ${c.cls} ${toneCls[c.tone]}`}
         >
           {c.label}
         </span>
       ))}
 
       <div className="relative mx-auto flex max-w-6xl flex-col items-center px-4 pb-28 pt-24 text-center sm:px-6 md:pt-32">
-        <div data-logo className="mb-8 rounded-[1.75rem] bg-white p-3 shadow-glow-spark">
+        <div data-logo className="mb-8 bg-white p-3 shadow-glow-spark">
           <Image src={brand.logos.mark} alt="NovaNxt Lab monogram" width={72} height={72} priority />
         </div>
         <p data-sub className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-spark-300">
@@ -84,7 +84,7 @@ export function DsHero() {
             <a
               key={id}
               href={`#${id}`}
-              className="rounded-chip border border-line px-3 py-1.5 text-muted transition hover:border-brand-500 hover:text-white"
+              className="border border-line px-3 py-1.5 text-muted transition hover:border-brand-500 hover:text-white"
             >
               #{id}
             </a>
