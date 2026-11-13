@@ -1,26 +1,218 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Light-only site: `dark:` utilities (e.g. in Aceternity components) apply only under an explicit .dark class,
+   never from the OS colour-scheme preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================================
+   NovaNxt Lab — Design Tokens  (documented at /design-system)
+   Palette "Logo Light" (v4) — the logo's three hues, used as soft tints:
+   brand = logo indigo   · spark = logo orange   · aqua = logo sky blue
+   RULE: colour fills/accents use the light end (100–300). Only text uses dark
+   steps (ink-700/900, brand-600+) so it stays readable (WCAG AA).
+   ink   = navy text      mist = cool neutrals / backgrounds
+   ============================================================ */
+
+@theme {
+  /* Ink — navy text (from the logo's indigo, desaturated) */
+  --color-ink-50: #f4f6fb;
+  --color-ink-100: #e6eaf4;
+  --color-ink-200: #c9d0e4;
+  --color-ink-300: #a1abc9;
+  --color-ink-400: #6f7ba3;
+  --color-ink-500: #4d5985;
+  --color-ink-600: #3a4470;
+  --color-ink-700: #2a335a;
+  --color-ink-800: #1c2347;
+  --color-ink-900: #121735;
+  --color-ink-950: #0a0d22;
+
+  /* Brand — logo indigo */
+  --color-brand-50: #eef0fb;
+  --color-brand-100: #dfe3f8;
+  --color-brand-200: #c3c9f1;
+  --color-brand-300: #9ea7e6;
+  --color-brand-400: #7480d7;
+  --color-brand-500: #5560c6;
+  --color-brand-600: #3f48ab;
+  --color-brand-700: #313889;
+  --color-brand-800: #262c69;
+  --color-brand-900: #1b2050;
+
+  /* Spark — logo orange */
+  --color-spark-50: #fff6ed;
+  --color-spark-100: #ffead3;
+  --color-spark-200: #ffd3a8;
+  --color-spark-300: #ffb877;
+  --color-spark-400: #ff9a42;
+  --color-spark-500: #ff7f11;
+  --color-spark-600: #ea6a00;
+  --color-spark-700: #c25500;
+  --color-spark-800: #9a4300;
+  --color-spark-900: #7a3600;
+
+  /* Aqua — logo sky blue */
+  --color-aqua-50: #ecf8ff;
+  --color-aqua-100: #d5efff;
+  --color-aqua-200: #ade1ff;
+  --color-aqua-300: #79cdfd;
+  --color-aqua-400: #3fb4f7;
+  --color-aqua-500: #1da1f2;
+  --color-aqua-600: #0b84d0;
+  --color-aqua-700: #0b69a8;
+  --color-aqua-800: #0f578a;
+  --color-aqua-900: #124972;
+
+  /* Mist — cool neutrals */
+  --color-mist-50: #f8fafc;
+  --color-mist-100: #f1f4f8;
+  --color-mist-200: #e3e8ef;
+  --color-mist-300: #cdd5e0;
+  --color-mist-400: #97a3b6;
+  --color-mist-500: #64718a;
+  --color-mist-600: #4a556b;
+  --color-mist-700: #343d50;
+
+  /* Semantic */
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-danger: #e5484d;
+  --color-whatsapp: #25d366;
+
+  /* Radii */
+  --radius-chip: 999px;
+  --radius-btn: 1rem;
+  --radius-card: 1.25rem;
+  --radius-panel: 2rem;
+
+  /* Shadows */
+  --shadow-soft: 0 1px 2px rgb(18 23 53 / 0.05), 0 8px 24px -8px rgb(18 23 53 / 0.1);
+  --shadow-lift: 0 2px 4px rgb(18 23 53 / 0.05), 0 24px 48px -16px rgb(18 23 53 / 0.18);
+  --shadow-glow-brand: 0 12px 32px -12px rgb(116 128 215 / 0.55);
+  --shadow-glow-spark: 0 12px 32px -12px rgb(255 154 66 / 0.6);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-gradient: gradient-shift 10s ease infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  /* Aceternity infinite-moving-cards */
+  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+
+  /* Hero entrance — CSS-only so it runs before hydration */
+  --animate-rise: rise 0.7s var(--ease-out-expo) both;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(16px); }
+  }
+
+  /* Text Generate Effect (CSS version) */
+  --animate-word: word-in 0.5s ease both;
+  --animate-word-plain: word-in-plain 0.5s ease both;
+
+  @keyframes word-in {
+    from { opacity: 0; filter: blur(10px); }
+  }
+  @keyframes word-in-plain {
+    from { opacity: 0; }
+  }
+
+  @keyframes scroll {
+    to { transform: translate(calc(-50% - 0.5rem)); }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 }
 
 @theme inline {
+  --font-display: var(--font-sora);
+  --font-sans: var(--font-jakarta);
+  --font-mono: var(--font-jetbrains);
+  --font-serif: var(--font-instrument);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Theme: "Paper" (light, default content sections) */
+:root {
+  --background: var(--color-mist-50);
+  --foreground: var(--color-ink-900);
+  --surface: #ffffff;
+  --muted: var(--color-mist-500);
+  --line: var(--color-mist-200);
+}
+
+/* Theme: "Midnight" (hero, AI sections, CTA, footer). Apply with .theme-midnight */
+.theme-midnight {
+  --background: var(--color-ink-950);
+  --foreground: #f2f4fb;
+  --surface: rgb(255 255 255 / 0.04);
+  --muted: var(--color-mist-300);
+  --line: rgb(255 255 255 / 0.1);
+  background: var(--background);
+  color: var(--foreground);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: var(--color-spark-200);
+  color: var(--color-ink-900);
+}
+
+/* Button shape: top-left + bottom-right sharp, the other two corners rounded.
+   Used for every button / button-like link. Chips & badges stay pills. */
+@utility rounded-cut {
+  border-radius: 0 var(--radius-btn) 0 var(--radius-btn);
+}
+
+/* Signature gradients */
+@utility bg-ink-gradient {
+  background-image: linear-gradient(135deg, var(--color-aqua-200) 0%, var(--color-brand-200) 100%);
+}
+@utility bg-brand-gradient {
+  background-image: linear-gradient(135deg, var(--color-spark-200) 0%, var(--color-spark-300) 100%);
+}
+@utility text-gradient {
+  background-image: linear-gradient(90deg, var(--color-brand-500), var(--color-aqua-500), var(--color-brand-500));
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
