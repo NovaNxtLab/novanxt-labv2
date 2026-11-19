@@ -1,6 +1,5 @@
 // The lab's own page. This is the URL the Google Business Profile should link to, so it carries the
 // "… in Kandivali West" local intent that the (location-neutral) course URLs no longer do.
-import type { Metadata } from "next";
 import {
   IconBrandWhatsapp,
   IconClock,
@@ -15,14 +14,22 @@ import { CtaBand } from "@/components/site/home-sections";
 import { LabGallery } from "@/components/site/lab-photos";
 import { CourseGrid, Tag, PageHeader, Section, SectionHeader, btn } from "@/components/site/ui";
 import { brand, contact, courses, reach } from "@/lib/brand";
+import { pageMetadata } from "@/lib/seo";
 
 const { area, city } = reach.lab;
 
-export const metadata: Metadata = {
-  title: `Computer Classes in ${area}, ${city} — AI, Python, Excel & Tally`,
-  description: `Visit the NovaNxt Lab classroom in ${area}, ${city}: hands-on AI, Python, web development, Excel, Tally, design and kids coding courses. Easy to reach from ${reach.nearby.join(", ")}.`,
-  alternates: { canonical: `/locations/${reach.lab.slug}` },
-};
+export const metadata = pageMetadata({
+  title: `Visit Our Computer Lab in ${area}, ${city}`,
+  description: `Computer classes in ${area}, ${city}: visit the NovaNxt Lab classroom in Mahavir Nagar. Easy to reach from ${reach.nearby.slice(0, 3).join(", ")}. Free demo class.`,
+  path: `/locations/${reach.lab.slug}`,
+  keywords: [
+    `computer classes in ${area}`,
+    `computer institute in ${area}`,
+    "computer classes in Mahavir Nagar Kandivali",
+    "computer classes near me Kandivali",
+    ...reach.nearby.map((n) => `computer classes near ${n}`),
+  ],
+});
 
 const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(`${contact.address}`)}&output=embed`;
 
@@ -39,8 +46,6 @@ export default function KandivaliWestPage() {
     <>
       <SiteNavbar />
       <main className="flex-1">
-        <LocalBusinessJsonLd />
-
         <PageHeader
           crumbs={[{ label: "Home", href: "/" }, { label: area }]}
           tag={<Tag tone="white">Our lab · {city}</Tag>}
@@ -140,28 +145,3 @@ export default function KandivaliWestPage() {
   );
 }
 
-/** schema.org local business data — the main signal (with the Google Business Profile) for "near me" searches. */
-function LocalBusinessJsonLd() {
-  const json = {
-    "@context": "https://schema.org",
-    "@type": ["EducationalOrganization", "LocalBusiness"],
-    "@id": `https://www.novanxtlab.com/locations/${reach.lab.slug}#lab`,
-    name: brand.name,
-    url: `https://www.novanxtlab.com/locations/${reach.lab.slug}`,
-    telephone: contact.phone,
-    email: contact.email,
-    image: `https://www.novanxtlab.com${brand.logos.mark}`,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "F/29, Profit Center, Mahavir Nagar",
-      addressLocality: `${area}, ${city}`,
-      addressRegion: "Maharashtra",
-      addressCountry: "IN",
-    },
-    areaServed: [area, ...reach.nearby, city].map((name) => ({ "@type": "Place", name })),
-    sameAs: Object.values(contact.socials),
-  };
-  return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json).replace(/</g, "\\u003c") }} />
-  );
-}

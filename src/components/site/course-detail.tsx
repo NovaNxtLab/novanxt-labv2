@@ -18,9 +18,10 @@ import Link from "next/link";
 import { BrochureButton } from "@/components/site/brochure-dialog";
 import { CourseIcon, demoText, enrollText, includes } from "@/components/site/course-meta";
 import { CtaBand } from "@/components/site/home-sections";
+import { courseLd, ldHtml } from "@/lib/seo";
 import { MobileActionBar } from "@/components/site/mobile-action-bar";
 import { CourseGrid, Tag, PageHeader, Section, SectionHeader, btn } from "@/components/site/ui";
-import { brand, contact, courses, reach, type Course } from "@/lib/brand";
+import { contact, courses, reach, type Course } from "@/lib/brand";
 import { courseDetails } from "@/lib/course-details";
 import { cn } from "@/lib/utils";
 
@@ -243,25 +244,5 @@ function Block({ title, icon: I, aside, children }: { title: string; icon: typeo
 /** schema.org Course — helps the page show as a course in search results. */
 function CourseJsonLd({ course: c }: { course: Course }) {
   const d = courseDetails[c.slug];
-  const json = {
-    "@context": "https://schema.org",
-    "@type": "Course",
-    name: c.title,
-    description: c.summary,
-    educationalLevel: d.level,
-    teaches: d.outcomes,
-    provider: {
-      "@type": "EducationalOrganization",
-      name: brand.name,
-      telephone: contact.phone,
-      address: { "@type": "PostalAddress", streetAddress: contact.address, addressLocality: "Mumbai", addressCountry: "IN" },
-    },
-    hasCourseInstance: {
-      "@type": "CourseInstance",
-      courseMode: "Onsite",
-      location: contact.address,
-      ...(c.duration && !c.duration.includes("levels") ? { courseWorkload: c.duration } : {}),
-    },
-  };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json).replace(/</g, "\\u003c") }} />;
+  return <script type="application/ld+json" dangerouslySetInnerHTML={ldHtml(courseLd(c, d.level, d.outcomes))} />;
 }

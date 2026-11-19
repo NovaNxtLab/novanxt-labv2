@@ -3,6 +3,7 @@
 // chunky Bricolage Grotesque headings. Square corners everywhere, light theme only,
 // motion limited to the hover "press" effect (and one marquee on the homepage).
 import Link from "next/link";
+import { breadcrumbLd, ldHtml } from "@/lib/seo";
 import type { ComponentProps, ReactNode } from "react";
 import { IconArrowRight, IconChevronRight, IconClock, IconChartBar } from "@tabler/icons-react";
 import { CourseIcon, courseHref } from "@/components/site/course-meta";
@@ -190,6 +191,7 @@ export function PageHeader({
     <header className={cn(tones[tone], "border-b-2 border-ink-900")}>
       <div className={cn(container, "pb-14 pt-6 md:pb-20 md:pt-8")}>
         <Breadcrumb items={crumbs} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={ldHtml(breadcrumbLd(crumbs))} />
         <div className={cn("mt-8 grid gap-10 md:mt-10", aside && "lg:grid-cols-[1fr_24rem] lg:items-end lg:gap-16")}>
           <div className="min-w-0">
             {tag}

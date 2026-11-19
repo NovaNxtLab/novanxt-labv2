@@ -186,9 +186,9 @@ export const reach = {
 } as const;
 
 export const seo = {
-  title: "Computer Courses in Mumbai | AI, Python, Excel & Tally — Kandivali West",
+  title: "Computer Courses in Kandivali West, Mumbai | NovaNxt Lab",
   description:
-    "Build real skills in AI, Python, web development, Excel, Tally and design at NovaNxt Lab — hands-on, project-based classes at our Kandivali West lab, serving students across Mumbai.",
+    "Hands-on AI, Python, web development, Excel, Tally, design and kids coding courses at NovaNxt Lab, Kandivali West, Mumbai. Book a free demo class today.",
   primaryKeywords: [
     "computer courses in Mumbai",
     "computer classes in Kandivali West",

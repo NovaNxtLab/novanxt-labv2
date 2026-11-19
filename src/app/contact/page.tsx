@@ -1,16 +1,17 @@
-import type { Metadata } from "next";
 import { ContactSection } from "@/components/site/contact-section";
 import { Faq } from "@/components/site/home-sections";
 import { MobileActionBar } from "@/components/site/mobile-action-bar";
 import { SiteNavbar } from "@/components/site/site-navbar";
 import { PageHeader, Section, SectionHeader, Tag } from "@/components/site/ui";
 import { brand, contact } from "@/lib/brand";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact NovaNxt Lab — Computer Classes in Kandivali West, Mumbai",
-  description: `Call, WhatsApp or send a message to ${brand.name}. Ask about course fees, batch timings or book a free demo class at our Kandivali West lab, Mumbai.`,
-  alternates: { canonical: "/contact" },
-};
+export const metadata = pageMetadata({
+  title: "Contact Us — Fees, Batches & Free Demo",
+  description: `Call ${contact.phone}, WhatsApp or message ${brand.name} about course fees, batch timings or a free demo class at our Kandivali West lab, Mumbai.`,
+  path: "/contact",
+  keywords: ["NovaNxt Lab contact number", "NovaNxt Lab address", "computer classes Kandivali West phone number", "book free demo computer class Mumbai"],
+});
 
 const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(contact.address)}&output=embed`;
 
@@ -39,7 +40,7 @@ export default function ContactPage() {
             />
           </div>
         </Section>
-        <Faq />
+        <Faq schema={false} />
       </main>
       <MobileActionBar whatsappText="Hi NovaNxt Lab, I have a question about your courses." label="WhatsApp us" />
     </>

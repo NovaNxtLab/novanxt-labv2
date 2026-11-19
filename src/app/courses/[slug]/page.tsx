@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SiteNavbar } from "@/components/site/site-navbar";
 import { CourseDetail } from "@/components/site/course-detail";
-import { courses, reach } from "@/lib/brand";
+import { courses, seo } from "@/lib/brand";
+import { courseKeywords, fitDescription, pageMetadata } from "@/lib/seo";
 
 // Every course is prerendered at build time (Cache Components requires at least one param here).
 export function generateStaticParams() {
@@ -20,11 +21,13 @@ const find = (slug: string) => courses.find((c) => c.slug === slug);
 export async function generateMetadata({ params }: PageProps<"/courses/[slug]">): Promise<Metadata> {
   const course = find((await params).slug);
   if (!course) return {};
-  return {
-    title: `${course.title} Course in Mumbai — Kandivali West`,
-    description: `${course.summary} Hands-on classroom batches at our Kandivali West lab, easy to reach from ${reach.nearby.slice(0, 3).join(", ")} and across Mumbai. Book a free demo.`,
-    alternates: { canonical: `/courses/${course.slug}` },
-  };
+  return pageMetadata({
+    title: `${course.title} Course in Kandivali West`,
+    description: fitDescription(course.summary, " Classes in Kandivali West, Mumbai. Free demo."),
+    path: `/courses/${course.slug}`,
+    keywords: [...(courseKeywords[course.slug] ?? []), ...seo.primaryKeywords.slice(0, 3)],
+    defaultImage: false, // uses ./opengraph-image.tsx
+  });
 }
 
 export default async function CoursePage({ params }: PageProps<"/courses/[slug]">) {

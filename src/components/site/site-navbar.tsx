@@ -92,7 +92,8 @@ export function SiteNavbar() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b-2 border-ink-900 bg-cream">
+    // Solid cream to match the page, with a thin 1px rule underneath.
+    <header className="sticky top-0 z-50 border-b border-ink-900 bg-cream">
       <div className={cn(container, "flex h-[4.5rem] items-center justify-between gap-4")}>
         <Logo />
 

@@ -185,7 +185,8 @@ export const faqs: { q: string; a: string }[] = [
   },
 ];
 
-export function Faq() {
+/** `schema={false}` where the same FAQ appears again (e.g. /contact) — Google wants FAQ markup on one URL. */
+export function Faq({ schema = true }: { schema?: boolean }) {
   const json = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -219,7 +220,7 @@ export function Faq() {
           </details>
         ))}
       </div>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json).replace(/</g, "\\u003c") }} />
+      {schema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json).replace(/</g, "\\u003c") }} />}
     </Section>
   );
 }
