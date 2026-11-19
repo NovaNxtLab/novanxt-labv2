@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SiteNavbar } from "@/components/site/site-navbar";
 import { CourseDetail } from "@/components/site/course-detail";
-import { courses } from "@/lib/brand";
+import { courses, reach } from "@/lib/brand";
 
 // Every course is prerendered at build time (Cache Components requires at least one param here).
 export function generateStaticParams() {
@@ -21,8 +21,8 @@ export async function generateMetadata({ params }: PageProps<"/courses/[slug]">)
   const course = find((await params).slug);
   if (!course) return {};
   return {
-    title: `${course.title} Course in Kandivali West`,
-    description: `${course.summary} Hands-on classes at NovaNxt Lab, Kandivali West, Mumbai. Book a free demo.`,
+    title: `${course.title} Course in Mumbai — Kandivali West`,
+    description: `${course.summary} Hands-on classroom batches at our Kandivali West lab, easy to reach from ${reach.nearby.slice(0, 3).join(", ")} and across Mumbai. Book a free demo.`,
     alternates: { canonical: `/courses/${course.slug}` },
   };
 }

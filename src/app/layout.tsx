@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { Sora, Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import { Bricolage_Grotesque, Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import { brand, seo } from "@/lib/brand";
+import { SiteFooter } from "@/components/site/site-footer";
 import "./globals.css";
 
-const sora = Sora({
-  variable: "--font-sora",
+// Headings: Bricolage Grotesque — chunky, characterful, popular with student-facing brands.
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
+  weight: ["600", "700", "800"],
 });
 
 const jakarta = Plus_Jakarta_Sans({
@@ -43,9 +45,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${sora.variable} ${jakarta.variable} ${jetbrains.variable} ${instrument.variable} h-full antialiased`}
+      className={`${bricolage.variable} ${jakarta.variable} ${jetbrains.variable} ${instrument.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col overflow-x-clip font-sans">{children}</body>
+      <body className="min-h-full overflow-x-clip font-sans text-ink-900">
+        {/* Whole site boxed at 7xl, centred; outlined on wide screens to match the sticker style */}
+        <div className="mx-auto flex min-h-svh w-full max-w-7xl flex-col bg-cream xl:border-x-2 xl:border-ink-900">
+          {children}
+          <SiteFooter />
+        </div>
+      </body>
     </html>
   );
 }

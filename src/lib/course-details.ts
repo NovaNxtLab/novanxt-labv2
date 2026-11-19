@@ -21,7 +21,7 @@ export type CourseDetails = {
 const certificate = "NovaNxt Lab course-completion certificate";
 
 export const courseDetails: Record<Course["slug"], CourseDetails> = {
-  "ai-ml-course-in-kandivali": {
+  "ai-ml-generative-ai": {
     level: "Intermediate → Advanced",
     badge: "Flagship",
     idealFor: ["Engineering & IT students", "Developers moving into AI", "Graduates targeting AI roles"],
@@ -36,7 +36,7 @@ export const courseDetails: Record<Course["slug"], CourseDetails> = {
     careers: ["AI Engineer", "ML Engineer", "Data Scientist", "Automation Engineer"],
     certificate,
   },
-  "python-with-ai-course-in-kandivali": {
+  "python-with-ai": {
     level: "Beginner → Intermediate",
     badge: "Most popular",
     idealFor: ["Students starting to code", "Working professionals automating tasks", "Anyone heading towards AI/Data"],
@@ -51,7 +51,7 @@ export const courseDetails: Record<Course["slug"], CourseDetails> = {
     careers: ["Python Developer", "Automation Executive", "Junior Data Analyst"],
     certificate,
   },
-  "full-stack-web-development-course-in-kandivali": {
+  "full-stack-web-development": {
     level: "Beginner → Intermediate",
     badge: "Job-ready",
     idealFor: ["Students who want to build websites", "Freelancers & small-business owners", "Career switchers into IT"],
@@ -66,7 +66,7 @@ export const courseDetails: Record<Course["slug"], CourseDetails> = {
     careers: ["Web Developer", "Front-end Developer", "Full-stack Developer (Junior)"],
     certificate,
   },
-  "core-java-course-in-kandivali": {
+  "core-java": {
     level: "Beginner → Intermediate",
     idealFor: ["BSc IT / BCA / engineering students", "Placement & interview preparation", "Learners building strong logic"],
     outcomes: [
@@ -80,7 +80,7 @@ export const courseDetails: Record<Course["slug"], CourseDetails> = {
     careers: ["Java Developer (Trainee)", "Software Tester", "Backend Developer (Junior)"],
     certificate,
   },
-  "advanced-excel-with-ai-course-in-kandivali": {
+  "advanced-excel-with-ai": {
     level: "Beginner → Intermediate",
     badge: "Most popular",
     idealFor: ["Accounts, sales & admin staff", "MIS / back-office aspirants", "Commerce students & graduates"],
@@ -95,7 +95,7 @@ export const courseDetails: Record<Course["slug"], CourseDetails> = {
     careers: ["MIS Executive", "Data Entry / Back-office Executive", "Junior Data Analyst"],
     certificate,
   },
-  "tally-gst-course-in-kandivali": {
+  "tally-gst-payroll": {
     level: "Beginner → Intermediate",
     badge: "Job-ready",
     idealFor: ["Commerce students & graduates", "Accounts assistants", "Small-business owners"],
@@ -110,7 +110,7 @@ export const courseDetails: Record<Course["slug"], CourseDetails> = {
     careers: ["Accountant", "Tally Operator", "GST Assistant", "Accounts Executive"],
     certificate,
   },
-  "office-automation-with-ai-course-in-kandivali": {
+  "office-automation-with-ai": {
     level: "Beginner",
     idealFor: ["First-time computer users", "Job seekers for office roles", "Homemakers & senior learners"],
     outcomes: [
@@ -124,7 +124,7 @@ export const courseDetails: Record<Course["slug"], CourseDetails> = {
     careers: ["Office Assistant", "Data Entry Operator", "Front-desk / Admin Executive"],
     certificate,
   },
-  "graphic-design-video-editing-course-in-kandivali": {
+  "graphic-design-video-editing": {
     level: "Beginner → Intermediate",
     idealFor: ["Aspiring designers & content creators", "Social-media managers", "Small-business owners"],
     outcomes: [
@@ -138,7 +138,7 @@ export const courseDetails: Record<Course["slug"], CourseDetails> = {
     careers: ["Graphic Designer", "Video Editor", "Social-media Designer", "Content Creator"],
     certificate,
   },
-  "kids-computer-course-in-kandivali": {
+  "kids-coding-and-ai": {
     level: "Ages 5–10",
     badge: "For kids",
     idealFor: ["School students aged 5–10", "First-time young learners", "Parents who want screen time to count"],

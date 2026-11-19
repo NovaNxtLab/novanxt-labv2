@@ -1,35 +1,40 @@
 // /courses/[slug] — full course details. Server component: everything is in the static HTML (SEO + no-JS).
-import Link from "next/link";
 import type { ReactNode } from "react";
 import {
-  IconArrowRight,
   IconBrandWhatsapp,
   IconCertificate,
   IconChartBar,
-  IconChevronRight,
   IconCircleCheckFilled,
   IconClock,
   IconDeviceLaptop,
+  IconFileText,
   IconListNumbers,
   IconMapPin,
   IconPhone,
   IconRocket,
+  IconUser,
 } from "@tabler/icons-react";
-import { CourseIcon, badgeStyle, courseHref, demoText, enrollText, includes, tile } from "@/components/site/course-meta";
-import { brand, contact, courses, type Course } from "@/lib/brand";
+import Link from "next/link";
+import { BrochureButton } from "@/components/site/brochure-dialog";
+import { CourseIcon, demoText, enrollText, includes } from "@/components/site/course-meta";
+import { CtaBand } from "@/components/site/home-sections";
+import { MobileActionBar } from "@/components/site/mobile-action-bar";
+import { CourseGrid, Tag, PageHeader, Section, SectionHeader, btn } from "@/components/site/ui";
+import { brand, contact, courses, reach, type Course } from "@/lib/brand";
 import { courseDetails } from "@/lib/course-details";
 import { cn } from "@/lib/utils";
 
+const iconTile = { spark: "bg-spark-300", brand: "bg-brand-200", ink: "bg-aqua-200" } as const;
+
 export function CourseDetail({ course: c }: { course: Course }) {
   const d = courseDetails[c.slug];
-
   const isKids = c.category === "Kids";
 
   const facts = [
     { k: "Duration", v: c.duration ?? "Flexible batches", icon: IconClock },
     { k: "Level", v: d.level, icon: IconChartBar },
     { k: isKids ? "Levels" : "Modules", v: String(c.modules.length), icon: IconListNumbers },
-    { k: "Mode", v: "Classroom lab", icon: IconDeviceLaptop },
+    { k: "Mode", v: reach.online.live ? "Classroom + online" : "Classroom", icon: IconDeviceLaptop },
   ];
 
   const related = [
@@ -41,246 +46,194 @@ export function CourseDetail({ course: c }: { course: Course }) {
     <>
       <CourseJsonLd course={c} />
 
-      {/* ---------- Header ---------- */}
-      <header className="border-b border-mist-200 bg-gradient-to-b from-white via-aqua-50/50 to-spark-50/60">
-        <div className="mx-auto max-w-7xl px-4 pb-12 pt-24 sm:px-6 md:pb-16 md:pt-32 lg:px-8">
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1 text-sm text-mist-500">
-            <Link href="/" className="py-2 hover:text-ink-800">Home</Link>
-            <IconChevronRight className="size-3.5" aria-hidden />
-            <Link href="/courses" className="py-2 hover:text-ink-800">Courses</Link>
-            <IconChevronRight className="size-3.5" aria-hidden />
-            <span aria-current="page" className="py-2 text-ink-800">{c.title}</span>
-          </nav>
-
-          <div className="mt-6 grid gap-10 lg:grid-cols-[1fr_22rem] lg:items-end lg:gap-16">
-            <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <span className={cn("grid size-11 place-items-center", tile[c.accent])}>
-                  <CourseIcon slug={c.slug} className="size-6" />
-                </span>
-                <span className="font-mono text-xs uppercase tracking-[0.2em] text-brand-500">{c.category}</span>
-                {d.badge && <span className={cn("px-2.5 py-1 text-xs font-semibold", badgeStyle[d.badge])}>{d.badge}</span>}
-              </div>
-              <h1 className="mt-5 font-display text-[clamp(2.1rem,9vw,2.6rem)] font-extrabold leading-[1.06] tracking-tight text-ink-900 text-balance sm:text-5xl lg:text-6xl">
-                {c.title}
-              </h1>
-              <p className="mt-4 font-display text-lg font-semibold text-aqua-700 md:text-xl">{c.tagline}</p>
-              <p className="mt-3 max-w-2xl text-base leading-relaxed text-mist-600 md:text-lg">{c.summary}</p>
-
-              <div className="mt-8 hidden flex-wrap gap-3 sm:flex">
-                <EnrollButton course={c} />
-                <a
-                  href={contact.whatsappHref(demoText(c))}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 border border-mist-300 bg-white px-6 font-display font-semibold text-ink-800 transition hover:border-ink-800"
-                >
-                  Book a free demo class
-                </a>
-              </div>
-            </div>
-
-            {/* key facts — packed, square */}
-            <dl className="grid grid-cols-2 gap-px border border-mist-200 bg-mist-200">
-              {facts.map(({ k, v, icon: I }) => (
-                <div key={k} className="bg-white p-4">
-                  <dt className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-mist-500">
-                    <I className="size-3.5" aria-hidden />
-                    {k}
-                  </dt>
-                  <dd className="mt-1.5 font-display text-base font-bold text-ink-900">{v}</dd>
-                </div>
-              ))}
-            </dl>
+      <PageHeader
+        crumbs={[{ label: "Home", href: "/" }, { label: "Courses", href: "/courses" }, { label: c.title }]}
+        tag={
+          <div className="flex flex-wrap items-center gap-3">
+            <span className={cn("grid size-12 place-items-center border-2 border-ink-900 text-ink-900", iconTile[c.accent])}>
+              <CourseIcon slug={c.slug} className="size-6" />
+            </span>
+            <Tag tone="white">{c.category}</Tag>
+            {d.badge && <Tag tone="orange" tilt>{d.badge}</Tag>}
           </div>
+        }
+        title={c.title}
+        intro={
+          <>
+            <p className="font-bold text-ink-800">{c.tagline}</p>
+            <p className="mt-2">{c.summary}</p>
+          </>
+        }
+        aside={
+          <dl className="grid grid-cols-2 border-2 border-ink-900 bg-white shadow-hard-lg">
+            {facts.map(({ k, v, icon: I }, i) => (
+              <div key={k} className={cn("p-5", i % 2 === 0 && "border-r-2 border-ink-900", i < 2 && "border-b-2 border-ink-900")}>
+                <dt className="flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-ink-500">
+                  <I className="size-4" aria-hidden />
+                  {k}
+                </dt>
+                <dd className="mt-1.5 font-display text-lg font-extrabold leading-tight text-ink-900">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        }
+      >
+        <p className="mt-6 flex items-start gap-2 text-sm text-ink-700">
+          <IconMapPin className="mt-0.5 size-4 shrink-0 text-spark-700" aria-hidden />
+          <span>
+            Classroom batches at our{" "}
+            <Link href={`/locations/${reach.lab.slug}`} className="font-extrabold text-ink-900 underline decoration-spark-400 decoration-[3px] underline-offset-4 hover:decoration-ink-900">
+              {reach.lab.area} lab
+            </Link>{" "}
+            — near {reach.nearby.slice(0, 3).join(", ")}
+          </span>
+        </p>
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+          <a href={contact.whatsappHref(demoText(c))} target="_blank" rel="noopener noreferrer" className={btn()}>
+            <IconBrandWhatsapp className="size-5" aria-hidden />
+            Book a free demo class
+          </a>
+          <BrochureButton course={c} className={btn({ variant: "secondary" })}>
+            <IconFileText className="size-5" aria-hidden />
+            Get fees &amp; syllabus
+          </BrochureButton>
         </div>
-      </header>
+      </PageHeader>
 
       {/* ---------- Body ---------- */}
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-[1fr_22rem] lg:gap-16 lg:px-8">
+      <Section inner="grid gap-12 lg:grid-cols-[1fr_22rem] lg:gap-16">
         <div className="min-w-0 space-y-14">
-          <Section eyebrow="01" title="Who this course is for">
-            <ul className="grid gap-px border border-aqua-100 bg-aqua-100 sm:grid-cols-3">
+          <Block title="Who this course is for" icon={IconUser}>
+            <ul className="grid gap-3 sm:grid-cols-3">
               {d.idealFor.map((t) => (
-                <li key={t} className="bg-aqua-50 p-4 text-sm font-semibold text-aqua-900">{t}</li>
+                <li key={t} className="border-2 border-ink-900 bg-aqua-100 p-4 text-sm font-extrabold text-ink-900">{t}</li>
               ))}
             </ul>
-          </Section>
+          </Block>
 
-          <Section eyebrow="02" title="What you'll be able to do">
+          <Block title="What you'll be able to do" icon={IconCircleCheckFilled}>
             <ul className="grid gap-4 sm:grid-cols-2">
               {d.outcomes.map((o) => (
-                <li key={o} className="flex gap-3 text-base leading-relaxed text-ink-700">
-                  <IconCircleCheckFilled className="mt-1 size-5 shrink-0 text-aqua-400" aria-hidden />
+                <li key={o} className="flex gap-3 leading-relaxed text-ink-800">
+                  <IconCircleCheckFilled className="mt-0.5 size-5 shrink-0 text-success" aria-hidden />
                   {o}
                 </li>
               ))}
             </ul>
-          </Section>
+          </Block>
 
-          <Section
-            eyebrow="03"
-            title={isKids ? "Levels" : "Syllabus"}
+          <Block
+            title={isKids ? "The levels" : "Syllabus"}
+            icon={IconListNumbers}
             aside={`${c.modules.length} ${isKids ? "levels" : "modules"}${c.duration && !isKids ? ` · ${c.duration}` : ""}`}
           >
-            <ol className="grid gap-px border border-mist-200 bg-mist-200 sm:grid-cols-2">
+            <ol className="grid border-l-2 border-t-2 border-ink-900 bg-white shadow-hard sm:grid-cols-2">
               {c.modules.map((m, i) => (
-                <li key={m} className="flex items-center gap-4 bg-white px-4 py-4">
-                  <span className="grid size-9 shrink-0 place-items-center bg-brand-50 font-mono text-sm font-semibold text-brand-700">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="font-medium text-ink-800">{m.replace(/^L\d · /, "")}</span>
+                <li key={m} className="flex items-center gap-4 border-b-2 border-r-2 border-ink-900 px-4 py-4">
+                  <span className="grid size-9 shrink-0 place-items-center border-2 border-ink-900 bg-brand-200 font-display font-extrabold text-ink-900">{i + 1}</span>
+                  <span className="font-bold text-ink-900">{m.replace(/^L\d · /, "")}</span>
                 </li>
               ))}
             </ol>
-          </Section>
+          </Block>
 
-          <Section eyebrow="04" title="Projects you'll build">
-            <ul className="grid gap-px border border-spark-100 bg-spark-100 sm:grid-cols-3">
+          <Block title="Projects you'll build" icon={IconRocket}>
+            <ul className="grid gap-3 sm:grid-cols-3">
               {d.projects.map((p) => (
-                <li key={p} className="flex flex-col gap-3 bg-spark-50 p-4">
-                  <IconRocket className="size-5 text-spark-600" aria-hidden />
-                  <span className="text-sm font-semibold text-ink-800">{p}</span>
+                <li key={p} className="flex flex-col gap-3 border-2 border-ink-900 bg-spark-200 p-4 shadow-hard-sm">
+                  <IconRocket className="size-6 text-ink-900" aria-hidden />
+                  <span className="font-display text-base font-bold leading-snug text-ink-900">{p}</span>
                 </li>
               ))}
             </ul>
-          </Section>
+          </Block>
 
-          <Section eyebrow="05" title="Tools you'll use">
+          <Block title="Tools you'll use" icon={IconDeviceLaptop}>
             <ul className="flex flex-wrap gap-2">
               {d.tools.map((t) => (
-                <li key={t} className="border border-mist-200 bg-white px-3 py-2 font-mono text-sm text-ink-700">{t}</li>
+                <li key={t} className="border-2 border-ink-900 bg-white px-3 py-2 text-sm font-bold text-ink-900">{t}</li>
               ))}
             </ul>
-          </Section>
+          </Block>
 
-          <Section eyebrow="06" title={isKids ? "What your child gains" : "Career roles you can target"}>
+          <Block title={isKids ? "What your child gains" : "Roles this prepares you for"} icon={IconChartBar}>
             <ul className="flex flex-wrap gap-2">
               {d.careers.map((t) => (
-                <li key={t} className="border border-brand-100 bg-brand-50 px-3 py-2 text-sm font-semibold text-brand-800">{t}</li>
+                <li key={t} className="border-2 border-ink-900 bg-brand-100 px-3 py-2 text-sm font-bold text-ink-900">{t}</li>
               ))}
             </ul>
-          </Section>
+          </Block>
 
-          <Section eyebrow="07" title="Certification">
-            <p className="flex items-start gap-3 border border-mist-200 bg-white p-4 text-ink-700">
-              <IconCertificate className="mt-0.5 size-5 shrink-0 text-brand-500" aria-hidden />
+          <Block title="Certificate" icon={IconCertificate}>
+            <p className="flex items-start gap-3 border-2 border-ink-900 bg-white p-5 font-semibold text-ink-900 shadow-hard-sm">
+              <IconCertificate className="mt-0.5 size-6 shrink-0 text-spark-700" aria-hidden />
               {d.certificate} on successful completion of the course and projects.
             </p>
-          </Section>
+          </Block>
         </div>
 
         {/* ---------- Sticky enrol panel (desktop) ---------- */}
         <aside className="hidden lg:block">
-          <div className="sticky top-28 border border-mist-200 bg-white shadow-lift">
-            <div className="border-b border-mist-200 bg-ink-gradient p-5">
-              <p className="font-mono text-[11px] uppercase tracking-widest text-brand-800">Next batch</p>
-              <p className="mt-1 font-display text-xl font-bold text-ink-900">Ask on WhatsApp</p>
-              <p className="mt-1 text-sm text-ink-700">Fees, timings &amp; weekday / weekend options.</p>
+          <div className="sticky top-24 border-2 border-ink-900 bg-white shadow-hard-lg">
+            <div className="border-b-2 border-ink-900 bg-spark-300 p-6">
+              <p className="font-display text-2xl font-extrabold text-ink-900">Join the next batch</p>
+              <p className="mt-1 text-sm text-ink-800">Ask us for fees, timings and weekday / weekend options.</p>
             </div>
-            <ul className="space-y-3 p-5">
+            <ul className="space-y-3 p-6">
               {includes.map(({ icon: I, label }) => (
-                <li key={label} className="flex items-center gap-2.5 text-sm font-medium text-ink-800">
-                  <I className="size-4 shrink-0 text-spark-600" aria-hidden />
+                <li key={label} className="flex items-center gap-2.5 text-sm font-semibold text-ink-800">
+                  <I className="size-5 shrink-0 text-spark-700" aria-hidden />
                   {label}
                 </li>
               ))}
             </ul>
-            <div className="space-y-2 border-t border-mist-200 p-5">
-              <EnrollButton course={c} className="w-full" />
-              <a
-                href={contact.phoneHref}
-                className="flex min-h-12 w-full items-center justify-center gap-2 border border-mist-300 font-display font-semibold text-ink-800 transition hover:border-ink-800"
-              >
-                <IconPhone className="size-5" />
+            <div className="space-y-4 border-t-2 border-ink-900 p-6">
+              <a href={contact.whatsappHref(enrollText(c))} target="_blank" rel="noopener noreferrer" className={btn({ block: true })}>
+                <IconBrandWhatsapp className="size-5" aria-hidden />
+                Enquire on WhatsApp
+              </a>
+              <BrochureButton course={c} className={btn({ variant: "secondary", block: true })}>
+                <IconFileText className="size-5" aria-hidden />
+                Get the brochure
+              </BrochureButton>
+              <a href={contact.phoneHref} className="flex min-h-11 w-full items-center justify-center gap-2 font-extrabold text-ink-900 hover:underline">
+                <IconPhone className="size-5" aria-hidden />
                 {contact.phone}
               </a>
             </div>
-            <p className="flex items-start gap-2 border-t border-mist-200 p-5 text-xs leading-relaxed text-mist-600">
-              <IconMapPin className="mt-0.5 size-4 shrink-0" aria-hidden />
-              {contact.address}
-            </p>
           </div>
         </aside>
-      </div>
+      </Section>
 
       {/* ---------- Related ---------- */}
-      <section aria-labelledby="related" className="border-t border-mist-200 bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-20 lg:px-8">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 id="related" className="font-display text-2xl font-bold text-ink-900 md:text-3xl">Explore other courses</h2>
-            <Link href="/courses" className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-brand-600 hover:text-brand-800">
-              All {courses.length} courses <IconArrowRight className="size-4" />
-            </Link>
-          </div>
-          <ul className="mt-8 grid gap-px border border-mist-200 bg-mist-200 md:grid-cols-3">
-            {related.map((r) => {
-
-              return (
-                <li key={r.slug} className="bg-white">
-                  <Link href={courseHref(r.slug)} className="group flex h-full flex-col p-5 transition hover:bg-aqua-50 sm:p-6">
-                    <span className="flex items-center gap-2.5">
-                      <span className={cn("grid size-9 place-items-center", tile[r.accent])}>
-                        <CourseIcon slug={r.slug} className="size-5" />
-                      </span>
-                      <span className="font-mono text-[11px] uppercase tracking-widest text-brand-500">{r.category}</span>
-                    </span>
-                    <span className="mt-4 font-display text-lg font-bold text-ink-900">{r.title}</span>
-                    <span className="mt-1.5 line-clamp-2 text-sm text-mist-600">{r.summary}</span>
-                    <span className="mt-4 flex items-center gap-1.5 text-sm font-semibold text-brand-600">
-                      View course <IconArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+      <Section tone="sky" aria-labelledby="related">
+        <SectionHeader id="related" tag="Keep exploring" title="Other courses you might like" />
+        <div className="mt-10">
+          <CourseGrid items={related} />
         </div>
-      </section>
+      </Section>
 
-      {/* ---------- Mobile/tablet: pinned enrol bar ---------- */}
-      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-[auto_1fr] gap-2 border-t border-mist-200 bg-white/95 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur lg:hidden">
-        <a
-          href={contact.phoneHref}
-          aria-label={`Call ${contact.phone}`}
-          className="grid size-12 place-items-center border border-mist-200 text-brand-600"
-        >
-          <IconPhone className="size-5" />
-        </a>
-        <EnrollButton course={c} />
-      </div>
-      {/* keeps the last content clear of the pinned bar */}
-      <div aria-hidden className="h-20 lg:hidden" />
+      <CtaBand
+        title={`Want to see what ${c.title} is like?`}
+        text="Book a free demo class at our lab, or get the brochure with fees and the full syllabus."
+      />
+
+      <MobileActionBar course={c} whatsappText={enrollText(c)} label="Enquire on WhatsApp" />
     </>
   );
 }
 
-function EnrollButton({ course: c, className }: { course: Course; className?: string }) {
-  return (
-    <a
-      href={contact.whatsappHref(enrollText(c))}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={cn(
-        "inline-flex min-h-12 items-center justify-center gap-2 bg-spark-300 px-6 font-display font-semibold text-ink-900 shadow-glow-spark transition hover:-translate-y-0.5 hover:bg-spark-400",
-        className,
-      )}
-    >
-      <IconBrandWhatsapp className="size-5" />
-      Enroll on WhatsApp
-    </a>
-  );
-}
-
-function Section({ eyebrow, title, aside, children }: { eyebrow: string; title: string; aside?: string; children: ReactNode }) {
+function Block({ title, icon: I, aside, children }: { title: string; icon: typeof IconUser; aside?: string; children: ReactNode }) {
   return (
     <section>
-      <div className="mb-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-mist-200 pb-3">
-        <h2 className="flex items-baseline gap-3 font-display text-xl font-bold text-ink-900 md:text-2xl">
-          <span className="font-mono text-sm font-semibold text-spark-600">{eyebrow}</span>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+        <h2 className="flex items-center gap-3 font-display text-3xl font-extrabold tracking-tight text-ink-900">
+          <span className="grid size-10 shrink-0 place-items-center border-2 border-ink-900 bg-spark-300 text-ink-900">
+            <I className="size-5" aria-hidden />
+          </span>
           {title}
         </h2>
-        {aside && <span className="font-mono text-xs text-mist-500">{aside}</span>}
+        {aside && <span className="text-sm font-bold text-ink-600">{aside}</span>}
       </div>
       {children}
     </section>
@@ -310,10 +263,5 @@ function CourseJsonLd({ course: c }: { course: Course }) {
       ...(c.duration && !c.duration.includes("levels") ? { courseWorkload: c.duration } : {}),
     },
   };
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(json).replace(/</g, "\\u003c") }}
-    />
-  );
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json).replace(/</g, "\\u003c") }} />;
 }

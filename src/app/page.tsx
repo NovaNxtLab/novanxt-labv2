@@ -1,26 +1,26 @@
 import { SiteNavbar } from "@/components/site/site-navbar";
 import { Hero } from "@/components/site/hero";
-import { Courses } from "@/components/site/courses";
+import { ContactSection } from "@/components/site/contact-section";
+import { CoursesSection, Faq, Highlights, HowItWorks, LabSection } from "@/components/site/home-sections";
+import { MobileActionBar } from "@/components/site/mobile-action-bar";
+import { Testimonials } from "@/components/site/testimonials";
 
-// Homepage teaser: flagship + the two most-asked-for tracks. Full catalogue lives at /courses.
-const featuredCourses = [
-  "ai-ml-course-in-kandivali",
-  "python-with-ai-course-in-kandivali",
-  "advanced-excel-with-ai-course-in-kandivali",
-];
-
+// Story: what we are → find your course → why us → reviews → how to start → the lab → doubts → get in touch.
 export default function Home() {
   return (
     <>
       <SiteNavbar />
       <main className="flex-1">
-        <section id="hero">
-          <Hero />
-        </section>
-        <section id="courses" aria-label="Courses" className="scroll-mt-20">
-          <Courses variant="featured" featured={featuredCourses} />
-        </section>
+        <Hero />
+        <CoursesSection />
+        <Highlights />
+        <Testimonials />
+        <HowItWorks />
+        <LabSection />
+        <Faq />
+        <ContactSection />
       </main>
+      <MobileActionBar whatsappText="Hi NovaNxt Lab, I'd like to book a free demo class." label="Book free demo" />
     </>
   );
 }

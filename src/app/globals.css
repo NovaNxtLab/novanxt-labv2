@@ -81,6 +81,9 @@
   --color-mist-600: #4a556b;
   --color-mist-700: #343d50;
 
+  /* Page background — warm paper */
+  --color-cream: #fffaf2;
+
   /* Semantic */
   --color-success: #16a34a;
   --color-warning: #f59e0b;
@@ -99,6 +102,11 @@
   --shadow-lift: 0 2px 4px rgb(18 23 53 / 0.05), 0 24px 48px -16px rgb(18 23 53 / 0.18);
   --shadow-glow-brand: 0 12px 32px -12px rgb(116 128 215 / 0.55);
   --shadow-glow-spark: 0 12px 32px -12px rgb(255 154 66 / 0.6);
+
+  /* "Sticker" style (2026-11-19 redesign): navy outline + hard offset shadow */
+  --shadow-hard-sm: 3px 3px 0 0 var(--color-ink-900);
+  --shadow-hard: 5px 5px 0 0 var(--color-ink-900);
+  --shadow-hard-lg: 8px 8px 0 0 var(--color-ink-900);
 
   /* Motion */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -148,7 +156,7 @@
 }
 
 @theme inline {
-  --font-display: var(--font-sora);
+  --font-display: var(--font-bricolage);
   --font-sans: var(--font-jakarta);
   --font-mono: var(--font-jetbrains);
   --font-serif: var(--font-instrument);
@@ -162,7 +170,7 @@
 
 /* Theme: "Paper" (light, default content sections) */
 :root {
-  --background: var(--color-mist-50);
+  --background: var(--color-cream);
   --foreground: var(--color-ink-900);
   --surface: #ffffff;
   --muted: var(--color-mist-500);
@@ -191,6 +199,19 @@ body {
 }
 
 /* Corners: everything is square — buttons, cards, chips, badges, panels. Do not add rounded-* classes. */
+
+/* Sticker press: lifts on hover, presses flat on click. Pair with border-2 border-ink-900 + shadow-hard*. */
+@utility press {
+  transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  &:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 0 var(--color-ink-900);
+  }
+  &:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 0 var(--color-ink-900);
+  }
+}
 
 /* Signature gradients */
 @utility bg-ink-gradient {

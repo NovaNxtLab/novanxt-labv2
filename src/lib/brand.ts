@@ -36,8 +36,10 @@ export const contact = {
   whatsappHref: (text = "Hi NovaNxt Lab, I want to know more about your courses.") =>
     `https://wa.me/917208237876?text=${encodeURIComponent(text)}`,
   socials: {
-    instagram: "https://www.instagram.com/novanxtlab",
-    facebook: "https://www.facebook.com/share/17Q8CBPmVX/",
+    instagram: "https://www.instagram.com/novanxtlab/",
+    youtube: "https://www.youtube.com/channel/UC8WeDm4qLr8Xuqe7Rv4SRjA",
+    facebook: "https://www.facebook.com/p/Novanxtlab-61574248554722/",
+    linkedin: "https://in.linkedin.com/in/novanxtlab",
   },
   hours: null as string | null, // TODO: not published on old site
 } as const;
@@ -46,7 +48,8 @@ export type CourseCategory = "AI & Data" | "Programming" | "Office & Accounts" |
 
 export type Course = {
   slug: string;
-  legacyPath: string; // old URL — must 301 to the new slug to keep rankings
+  // Earlier URLs (old site + the pre-2026-11-17 "-in-kandivali" slugs). Each 301s to /courses/<slug> — see next.config.ts.
+  legacyPaths: string[];
   title: string;
   category: CourseCategory;
   tagline: string;
@@ -58,8 +61,8 @@ export type Course = {
 
 export const courses: Course[] = [
   {
-    slug: "ai-ml-course-in-kandivali",
-    legacyPath: "/ai-ml-course-in-mumbai/",
+    slug: "ai-ml-generative-ai",
+    legacyPaths: ["/ai-ml-course-in-mumbai/", "/courses/ai-ml-course-in-kandivali"],
     title: "AI + ML + Generative AI",
     category: "AI & Data",
     tagline: "Learn AI. Build Real Systems. Prepare for the Future.",
@@ -78,8 +81,8 @@ export const courses: Course[] = [
     accent: "spark",
   },
   {
-    slug: "python-with-ai-course-in-kandivali",
-    legacyPath: "/course-python.html",
+    slug: "python-with-ai",
+    legacyPaths: ["/course-python.html", "/courses/python-with-ai-course-in-kandivali"],
     title: "Python + AI",
     category: "Programming",
     tagline: "Logic | Automation | APIs | Real Applications",
@@ -89,8 +92,8 @@ export const courses: Course[] = [
     accent: "spark",
   },
   {
-    slug: "full-stack-web-development-course-in-kandivali",
-    legacyPath: "/course-web-development.html",
+    slug: "full-stack-web-development",
+    legacyPaths: ["/course-web-development.html", "/courses/full-stack-web-development-course-in-kandivali"],
     title: "Web Development + AI",
     category: "Programming",
     tagline: "From first tag to deployed full-stack app.",
@@ -100,8 +103,8 @@ export const courses: Course[] = [
     accent: "ink",
   },
   {
-    slug: "core-java-course-in-kandivali",
-    legacyPath: "/course-core-java.html",
+    slug: "core-java",
+    legacyPaths: ["/course-core-java.html", "/courses/core-java-course-in-kandivali"],
     title: "Core Java + AI",
     category: "Programming",
     tagline: "Strong logic. Solid OOP. Real applications.",
@@ -111,8 +114,8 @@ export const courses: Course[] = [
     accent: "ink",
   },
   {
-    slug: "advanced-excel-with-ai-course-in-kandivali",
-    legacyPath: "/advanced-excel-with-ai-course/",
+    slug: "advanced-excel-with-ai",
+    legacyPaths: ["/advanced-excel-with-ai-course/", "/courses/advanced-excel-with-ai-course-in-kandivali"],
     title: "Advanced Excel + AI",
     category: "Office & Accounts",
     tagline: "Learn Excel Smarter. Analyse Better. Work Faster with AI.",
@@ -122,8 +125,8 @@ export const courses: Course[] = [
     accent: "brand",
   },
   {
-    slug: "tally-gst-course-in-kandivali",
-    legacyPath: "/tally-course/",
+    slug: "tally-gst-payroll",
+    legacyPaths: ["/tally-course/", "/courses/tally-gst-course-in-kandivali"],
     title: "Tally + GST + Payroll",
     category: "Office & Accounts",
     tagline: "Master Accounting. Understand Taxation. Build Job-Ready Skills.",
@@ -133,8 +136,8 @@ export const courses: Course[] = [
     accent: "brand",
   },
   {
-    slug: "office-automation-with-ai-course-in-kandivali",
-    legacyPath: "/course-complete-computer.html",
+    slug: "office-automation-with-ai",
+    legacyPaths: ["/course-complete-computer.html", "/courses/office-automation-with-ai-course-in-kandivali"],
     title: "Office Automation + AI",
     category: "Office & Accounts",
     tagline: "Job-ready for every office role.",
@@ -144,8 +147,8 @@ export const courses: Course[] = [
     accent: "brand",
   },
   {
-    slug: "graphic-design-video-editing-course-in-kandivali",
-    legacyPath: "/course-graphic-videoediting.html",
+    slug: "graphic-design-video-editing",
+    legacyPaths: ["/course-graphic-videoediting.html", "/courses/graphic-design-video-editing-course-in-kandivali"],
     title: "Graphic Design & Video Editing",
     category: "Creative",
     tagline: "Design. Edit. Go viral.",
@@ -155,8 +158,8 @@ export const courses: Course[] = [
     accent: "ink",
   },
   {
-    slug: "kids-computer-course-in-kandivali",
-    legacyPath: "/course-child.html",
+    slug: "kids-coding-and-ai",
+    legacyPaths: ["/course-child.html", "/courses/kids-computer-course-in-kandivali"],
     title: "Kids Coding + AI Adventure",
     category: "Kids",
     tagline: "A Creative Coding + AI Adventure Program (Age 5–10)",
@@ -174,15 +177,24 @@ export const courses: Course[] = [
   },
 ];
 
+// Where students come from. The lab is in Kandivali West; these are real commute areas (western suburbs).
+// Online batches are planned — flip `online.live` when they launch, and the site copy switches over.
+export const reach = {
+  lab: { area: "Kandivali West", city: "Mumbai", slug: "kandivali-west" },
+  nearby: ["Borivali", "Malad", "Dahisar", "Goregaon", "Charkop", "Mira Road"],
+  online: { live: false, label: "Live online batches — coming soon" },
+} as const;
+
 export const seo = {
-  title: "Computer Classes in Kandivali West | AI, Python, Excel & Tally Courses — NovaNxt Lab",
+  title: "Computer Courses in Mumbai | AI, Python, Excel & Tally — Kandivali West",
   description:
-    "NovaNxt Lab offers practical, job-oriented computer courses in Kandivali West, Mumbai — AI & ML, Python, Full Stack Development, Advanced Excel, Tally and more.",
+    "Build real skills in AI, Python, web development, Excel, Tally and design at NovaNxt Lab — hands-on, project-based classes at our Kandivali West lab, serving students across Mumbai.",
   primaryKeywords: [
+    "computer courses in Mumbai",
     "computer classes in Kandivali West",
     "computer courses in Kandivali",
-    "job-oriented computer courses Mumbai",
     "computer institute in Kandivali",
+    "computer classes near Borivali and Malad",
   ],
   courseKeywords: [
     "AI & ML course in Kandivali",

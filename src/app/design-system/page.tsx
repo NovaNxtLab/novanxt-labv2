@@ -411,7 +411,7 @@ export default function DesignSystemPage() {
             <Label>301 redirects (next.config redirects)</Label>
             <ul className="space-y-2 border border-line bg-surface p-4 font-mono text-xs">
               {courses.map((c) => (
-                <li key={c.slug} className="break-all"><span className="text-mist-400">{c.legacyPath}</span> <span className="text-brand-600">→</span> /courses/{c.slug}</li>
+                <li key={c.slug} className="break-all"><span className="text-mist-400">{c.legacyPaths.join(", ")}</span> <span className="text-brand-600">→</span> /courses/{c.slug}</li>
               ))}
             </ul>
             <p className="mt-3 text-sm text-muted">Plus: JSON-LD <code className="font-mono">EducationalOrganization</code> + <code className="font-mono">Course</code> schema, sitemap.ts, robots.ts, per-page OG images.</p>

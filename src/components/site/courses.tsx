@@ -38,7 +38,7 @@ export function Courses({ variant = "all", featured = [] }: { variant?: "feature
         <div>
           <p className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-brand-500">
             <span className="h-px w-10 bg-spark-300" />
-            Career tracks
+            Skill tracks
           </p>
           <Heading className="mt-4 font-display text-[clamp(2rem,8.5vw,2.4rem)] font-extrabold leading-[1.08] tracking-tight text-ink-900 text-balance sm:text-5xl lg:text-[3.3rem]">
             Pick a course.{" "}
@@ -181,9 +181,9 @@ function MetaRow({ course: c, className, compact = false }: { course: Course; cl
 /* ---------- Homepage: packed grid (Aceternity Feature Section), square corners ---------- */
 
 const visuals: Record<string, (c: Course) => ReactNode> = {
-  "ai-ml-course-in-kandivali": (c) => <PathVisual course={c} />,
-  "python-with-ai-course-in-kandivali": () => <CodeVisual />,
-  "advanced-excel-with-ai-course-in-kandivali": () => <AnalyticsVisual />,
+  "ai-ml-generative-ai": (c) => <PathVisual course={c} />,
+  "python-with-ai": () => <CodeVisual />,
+  "advanced-excel-with-ai": () => <AnalyticsVisual />,
 };
 
 // lg = 6-column grid, two rows sized to fit one desktop screen:

@@ -21,15 +21,15 @@ import type { Course } from "@/lib/brand";
 import type { CourseDetails } from "@/lib/course-details";
 
 const icons: Record<string, Icon> = {
-  "ai-ml-course-in-kandivali": IconBrain,
-  "python-with-ai-course-in-kandivali": IconBrandPython,
-  "full-stack-web-development-course-in-kandivali": IconCode,
-  "core-java-course-in-kandivali": IconCoffee,
-  "advanced-excel-with-ai-course-in-kandivali": IconTable,
-  "tally-gst-course-in-kandivali": IconReceiptTax,
-  "office-automation-with-ai-course-in-kandivali": IconBriefcase,
-  "graphic-design-video-editing-course-in-kandivali": IconPalette,
-  "kids-computer-course-in-kandivali": IconMoodKid,
+  "ai-ml-generative-ai": IconBrain,
+  "python-with-ai": IconBrandPython,
+  "full-stack-web-development": IconCode,
+  "core-java": IconCoffee,
+  "advanced-excel-with-ai": IconTable,
+  "tally-gst-payroll": IconReceiptTax,
+  "office-automation-with-ai": IconBriefcase,
+  "graphic-design-video-editing": IconPalette,
+  "kids-coding-and-ai": IconMoodKid,
 };
 export const courseIcon = (slug: string): Icon => icons[slug] ?? IconSchool;
 
